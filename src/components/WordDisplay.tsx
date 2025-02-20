@@ -14,21 +14,37 @@ const WordDisplay = ({ word, isCorrect }: WordDisplayProps) => {
       transition={{ duration: 0.3 }}
       className="text-center py-8"
     >
-      <motion.h2
-        key={word}
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className={`text-6xl font-bold mb-4 ${
-          isCorrect === true
-            ? 'text-game-success'
-            : isCorrect === false
-            ? 'text-game-error'
-            : 'text-gray-800'
-        }`}
+      <motion.div
+        initial={false}
+        animate={{
+          scale: isCorrect === true ? [1, 1.2, 1] : 1,
+          rotate: isCorrect === false ? [-5, 5, -5, 0] : 0
+        }}
+        transition={{ duration: 0.5 }}
       >
-        {word}
-      </motion.h2>
-      <p className="text-gray-500 text-lg">Say this word</p>
+        <motion.h2
+          key={word}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className={`text-7xl font-bold mb-6 ${
+            isCorrect === true
+              ? 'text-game-success'
+              : isCorrect === false
+              ? 'text-game-error'
+              : 'bg-gradient-to-r from-game-primary to-game-secondary bg-clip-text text-transparent'
+          }`}
+        >
+          {word}
+        </motion.h2>
+      </motion.div>
+      <motion.p 
+        className="text-gray-500 text-xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        Say this word
+      </motion.p>
     </motion.div>
   );
 };

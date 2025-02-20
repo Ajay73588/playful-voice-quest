@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Mic, MicOff, Volume2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
 
 interface SpeechRecognitionComponentProps {
   onResult: (result: string) => void;
@@ -65,32 +66,48 @@ const SpeechRecognitionComponent = ({ onResult, currentWord }: SpeechRecognition
   };
 
   return (
-    <div className="flex gap-4 justify-center items-center mt-6">
-      <Button
-        onClick={toggleListening}
-        variant="outline"
-        size="lg"
-        className={`transition-all duration-300 ${
-          isListening
-            ? 'bg-game-error hover:bg-game-error/90'
-            : 'bg-game-primary hover:bg-game-primary/90'
-        }`}
+    <motion.div 
+      className="flex gap-6 justify-center items-center mt-8"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3 }}
+    >
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        {isListening ? (
-          <MicOff className="h-6 w-6 text-white animate-pulse" />
-        ) : (
-          <Mic className="h-6 w-6 text-white" />
-        )}
-      </Button>
-      <Button
-        onClick={speak}
-        variant="outline"
-        size="lg"
-        className="bg-game-secondary hover:bg-game-secondary/90"
+        <Button
+          onClick={toggleListening}
+          variant="outline"
+          size="lg"
+          className={`transition-all duration-300 p-8 rounded-2xl shadow-lg ${
+            isListening
+              ? 'bg-game-error hover:bg-game-error/90'
+              : 'bg-game-primary hover:bg-game-primary/90'
+          }`}
+        >
+          {isListening ? (
+            <MicOff className="h-8 w-8 text-white animate-pulse" />
+          ) : (
+            <Mic className="h-8 w-8 text-white" />
+          )}
+        </Button>
+      </motion.div>
+
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <Volume2 className="h-6 w-6 text-white" />
-      </Button>
-    </div>
+        <Button
+          onClick={speak}
+          variant="outline"
+          size="lg"
+          className="bg-game-secondary hover:bg-game-secondary/90 p-8 rounded-2xl shadow-lg"
+        >
+          <Volume2 className="h-8 w-8 text-white" />
+        </Button>
+      </motion.div>
+    </motion.div>
   );
 };
 
